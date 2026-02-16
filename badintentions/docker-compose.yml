@@ -1,0 +1,32 @@
+services:
+  csa:
+    build: .
+    container_name: csa-runner
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - sandbox
+    depends_on:
+      - target
+      - defender
+
+  target:
+    image: python:3.12-slim
+    container_name: csa-target
+    command: ["python", "-m", "http.server", "8080"]
+    networks:
+      - sandbox
+    # Placeholder: replace with actual target service
+
+  defender:
+    image: python:3.12-slim
+    container_name: csa-defender
+    command: ["python", "-m", "http.server", "9090"]
+    networks:
+      - sandbox
+    # Placeholder: replace with defender monitoring service
+
+networks:
+  sandbox:
+    driver: bridge
+    internal: true  # No external internet access for isolation
