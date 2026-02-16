@@ -11,8 +11,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from chaos_auditor.vectors.application import AttackVector
 
-def generate_container_escape_vectors(dockerfile: Path) -> list[dict[str, str]]:
+
+def generate_container_escape_vectors(dockerfile: Path) -> list[AttackVector]:
     """Generate container-escape attack vectors from Dockerfile analysis.
 
     Parameters
@@ -22,13 +24,13 @@ def generate_container_escape_vectors(dockerfile: Path) -> list[dict[str, str]]:
 
     Returns
     -------
-    list[dict[str, str]]
+    list[AttackVector]
         Container escape vectors.
     """
     raise NotImplementedError
 
 
-def generate_dockerfile_vectors(dockerfile: Path) -> list[dict[str, str]]:
+def generate_dockerfile_vectors(dockerfile: Path) -> list[AttackVector]:
     """Audit a Dockerfile for security anti-patterns.
 
     Checks for:
@@ -44,13 +46,13 @@ def generate_dockerfile_vectors(dockerfile: Path) -> list[dict[str, str]]:
 
     Returns
     -------
-    list[dict[str, str]]
+    list[AttackVector]
         Dockerfile-specific security findings.
     """
     raise NotImplementedError
 
 
-def generate_resource_exhaustion_vectors() -> list[dict[str, str]]:
+def generate_resource_exhaustion_vectors() -> list[AttackVector]:
     """Generate resource-exhaustion attack vectors.
 
     Produces scenarios such as CPU bombs, memory exhaustion,
@@ -58,7 +60,7 @@ def generate_resource_exhaustion_vectors() -> list[dict[str, str]]:
 
     Returns
     -------
-    list[dict[str, str]]
+    list[AttackVector]
         Resource exhaustion vectors.
     """
     raise NotImplementedError

@@ -10,17 +10,8 @@ Generates vectors targeting the application layer:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
 
-
-class Severity(Enum):
-    """CVSS-aligned severity rating."""
-
-    INFO = "info"
-    LOW = "low"
-    MEDIUM = "medium"
-    HIGH = "high"
-    CRITICAL = "critical"
+from chaos_auditor import Severity
 
 
 @dataclass

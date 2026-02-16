@@ -9,7 +9,7 @@ Orders attack vectors by a composite score of:
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -21,7 +21,7 @@ class ScoredVector:
     likelihood: float
     blast_radius: float
     composite_score: float = 0.0
-    depends_on: list[str] | None = None
+    depends_on: list[str] = field(default_factory=list)
 
 
 def compute_score(severity: float, likelihood: float, blast_radius: float) -> float:

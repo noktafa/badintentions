@@ -54,4 +54,4 @@ class TestScheduler:
             vector_id="v1", severity_score=8.0, likelihood=0.9, blast_radius=0.7
         )
         assert sv.composite_score == 0.0
-        assert sv.depends_on is None
+        assert sv.depends_on == []

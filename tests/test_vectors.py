@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
+from chaos_auditor import Severity
 from chaos_auditor.vectors.application import (
     AttackVector,
-    Severity,
     generate_bola_vectors,
     generate_injection_vectors,
     generate_logic_flaw_vectors,
@@ -36,7 +38,7 @@ class TestApplicationVectors:
 
     def test_attack_vector_defaults(self) -> None:
         vec = AttackVector(id="v1", name="test", category="test", description="test")
-        assert vec.severity == Severity.MEDIUM
+        assert vec.severity is Severity.MEDIUM
         assert vec.references == []
 
 
@@ -55,17 +57,13 @@ class TestMiddlewareVectors:
 class TestInfrastructureVectors:
     """Tests for infrastructure-level vector generation."""
 
-    def test_generate_container_escape_not_implemented(self, tmp_path: str) -> None:
-        from pathlib import Path
-
+    def test_generate_container_escape_not_implemented(self, tmp_path: Path) -> None:
         with pytest.raises(NotImplementedError):
-            generate_container_escape_vectors(Path(tmp_path) / "Dockerfile")
+            generate_container_escape_vectors(tmp_path / "Dockerfile")
 
-    def test_generate_dockerfile_not_implemented(self, tmp_path: str) -> None:
-        from pathlib import Path
-
+    def test_generate_dockerfile_not_implemented(self, tmp_path: Path) -> None:
         with pytest.raises(NotImplementedError):
-            generate_dockerfile_vectors(Path(tmp_path) / "Dockerfile")
+            generate_dockerfile_vectors(tmp_path / "Dockerfile")
 
     def test_generate_resource_exhaustion_not_implemented(self) -> None:
         with pytest.raises(NotImplementedError):

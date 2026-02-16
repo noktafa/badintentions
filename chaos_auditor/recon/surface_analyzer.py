@@ -9,6 +9,7 @@ Scans source code and configuration files to enumerate:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
 
 @dataclass
@@ -30,7 +31,7 @@ class AttackSurface:
     db_schemas: list[str] = field(default_factory=list)
 
 
-def map_endpoints(repo_root: str) -> list[Endpoint]:
+def map_endpoints(repo_root: Path) -> list[Endpoint]:
     """Extract API endpoints from source code and route definitions.
 
     Parameters
@@ -46,7 +47,7 @@ def map_endpoints(repo_root: str) -> list[Endpoint]:
     raise NotImplementedError
 
 
-def map_attack_surface(repo_root: str) -> AttackSurface:
+def map_attack_surface(repo_root: Path) -> AttackSurface:
     """Build a full :class:`AttackSurface` model for the target.
 
     Parameters

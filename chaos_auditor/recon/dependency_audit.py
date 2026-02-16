@@ -10,6 +10,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from chaos_auditor import Severity
+
 
 @dataclass
 class VulnerablePackage:
@@ -18,7 +20,7 @@ class VulnerablePackage:
     name: str
     installed_version: str
     cve_ids: list[str] = field(default_factory=list)
-    severity: str = "unknown"
+    severity: Severity = Severity.INFO
     fixed_version: str | None = None
 
 

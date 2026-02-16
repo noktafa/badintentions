@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS base
+FROM python:3.12-slim
 
 LABEL maintainer="CSA Team"
 LABEL description="Chaos Security Auditor — sandboxed runner"
@@ -19,11 +19,12 @@ RUN pip install --no-cache-dir semgrep
 
 WORKDIR /app
 
-# Install Python dependencies
+# Install Python dependencies (cache-friendly: deps first, then source)
 COPY pyproject.toml README.md ./
+COPY chaos_auditor/__init__.py ./chaos_auditor/__init__.py
 RUN pip install --no-cache-dir .
 
-# Copy application code
+# Copy full application code
 COPY chaos_auditor/ ./chaos_auditor/
 
 # Drop to non-root user

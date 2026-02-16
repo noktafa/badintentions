@@ -11,6 +11,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from chaos_auditor.vectors.application import AttackVector
+
 
 @dataclass
 class MiddlewareTarget:
@@ -23,7 +25,7 @@ class MiddlewareTarget:
     metadata: dict[str, str] = field(default_factory=dict)
 
 
-def generate_broker_vectors(targets: list[MiddlewareTarget]) -> list[dict[str, str]]:
+def generate_broker_vectors(targets: list[MiddlewareTarget]) -> list[AttackVector]:
     """Generate attack vectors for message brokers.
 
     Parameters
@@ -33,13 +35,13 @@ def generate_broker_vectors(targets: list[MiddlewareTarget]) -> list[dict[str, s
 
     Returns
     -------
-    list[dict[str, str]]
+    list[AttackVector]
         Broker-specific attack vectors.
     """
     raise NotImplementedError
 
 
-def generate_cache_vectors(targets: list[MiddlewareTarget]) -> list[dict[str, str]]:
+def generate_cache_vectors(targets: list[MiddlewareTarget]) -> list[AttackVector]:
     """Generate attack vectors for cache stores (Redis, Memcached).
 
     Parameters
@@ -49,13 +51,13 @@ def generate_cache_vectors(targets: list[MiddlewareTarget]) -> list[dict[str, st
 
     Returns
     -------
-    list[dict[str, str]]
+    list[AttackVector]
         Cache-specific attack vectors.
     """
     raise NotImplementedError
 
 
-def generate_storage_vectors(targets: list[MiddlewareTarget]) -> list[dict[str, str]]:
+def generate_storage_vectors(targets: list[MiddlewareTarget]) -> list[AttackVector]:
     """Generate attack vectors for object storage (S3, GCS).
 
     Parameters
@@ -65,7 +67,7 @@ def generate_storage_vectors(targets: list[MiddlewareTarget]) -> list[dict[str, 
 
     Returns
     -------
-    list[dict[str, str]]
+    list[AttackVector]
         Storage-specific attack vectors.
     """
     raise NotImplementedError

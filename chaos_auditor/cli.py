@@ -9,7 +9,11 @@ Provides the ``csa`` command with sub-commands for each audit phase:
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import click
+
+from chaos_auditor.config import AuditConfig, load_config
 
 
 @click.group()
@@ -17,15 +21,18 @@ import click
 @click.option(
     "--config",
     "-c",
-    type=click.Path(exists=True),
+    type=click.Path(exists=True, path_type=Path),
     default=None,
     help="Path to YAML/TOML configuration file.",
 )
 @click.pass_context
-def main(ctx: click.Context, config: str | None) -> None:
+def main(ctx: click.Context, config: Path | None) -> None:
     """Chaos Security Auditor — adversarial security testing in sandboxed environments."""
     ctx.ensure_object(dict)
-    ctx.obj["config_path"] = config
+    if config is not None:
+        ctx.obj["config"] = load_config(config)
+    else:
+        ctx.obj["config"] = AuditConfig()
 
 
 @main.command()
@@ -40,7 +47,7 @@ def recon(ctx: click.Context, repo: str) -> None:
 @click.option("--level", type=click.Choice(["app", "middleware", "infra", "all"]), default="all")
 @click.pass_context
 def attack(ctx: click.Context, level: str) -> None:
-    """Phase 2–3: Generate attack vectors and execute the Hypothesize→Attack→Observe→Escalate loop."""
+    """Phase 2-3: Generate attack vectors and execute the Hypothesize-Attack-Observe-Escalate loop."""
     raise NotImplementedError("Attack phase not yet implemented.")
 
 
