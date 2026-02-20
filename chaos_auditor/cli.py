@@ -52,6 +52,22 @@ def attack(ctx: click.Context, level: str) -> None:
 
 
 @main.command()
+@click.option("--output-format", type=click.Choice(["json", "markdown"]), default="markdown")
+@click.option("--focus", multiple=True, help="Focus audit on specific components.")
+@click.pass_context
+def audit(ctx: click.Context, output_format: str, focus: tuple[str, ...]) -> None:
+    """Run a full audit cycle (recon + attack + report)."""
+    import json as _json
+    import sys
+
+    result = {"findings": [], "summary": "Audit completed (no attack vectors implemented yet)"}
+    if output_format == "json":
+        _json.dump(result, sys.stdout)
+    else:
+        click.echo("# Chaos Security Audit Report\n\nNo findings — attack vectors not yet implemented.")
+
+
+@main.command()
 @click.option("--output", "-o", type=click.Path(), default="reports/chaos_report.md")
 @click.pass_context
 def report(ctx: click.Context, output: str) -> None:
